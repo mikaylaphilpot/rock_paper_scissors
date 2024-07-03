@@ -23,24 +23,101 @@
                 }
                 return computerChoice;
             }
+
             function getHumanChoice() {
-                //prompts user for their choice of rock, paper, or scissors and stores choice
+                // prompts user for their choice of rock, paper, or scissors and stores choice
                 let humanChoice = prompt("Rock, paper or scissors? Please enter your choice.");
+                // gets rid of whitespace in user answer
                 humanChoice = humanChoice.trim();
+                // makes user answer case insensitive
+                humanChoice = humanChoice.toLowerCase();
                 // ensures they do not enter something other than rock, paper or scissors
                 while((humanChoice !== "rock") && (humanChoice !== "paper") && (humanChoice !== "scissors")) {
                     humanChoice = prompt("That is not a valid choice. Please enter rock, paper or scissors.")
                 }
                 return humanChoice;
             }
-            // stores computer's choice of rock, paper, or scissors outside of the function
-            let computerChoice = getComputerChoice();
-            // stores user's choice of rock, paper or scissors outside of the function
-            let userChoice = getHumanChoice();
-            // stores score for user
+
+            // creates place to store computer's choice of rock, paper, or scissors outside of the function
+            let computerChoice;
+            // creates place to store user's choice of rock, paper or scissors outside of the function
+            let userChoice;
+
+            // creates place to store score for user
             let userScore = 0;
-            // stores score for computer
+            // creates place to store score for computer
             let computerScore = 0;
+            
+            function playRound(userChoice, computerChoice) {
+                // logs user choice and computer choice so user is aware
+                console.log("You picked " + userChoice + " and the computer picked " + computerChoice + ".")
+                // establishes place to store user and computer scores for the round
+                let userScoreRound;
+                let computerScoreRound;
+                let roundWinner;
+
+                if (userChoice === computerChoice) {
+                    // Let's user know they tied if they make the same choice as the computer
+                    console.log("You tied! No one gets a point this round."); 
+                    // nobody won
+                    roundWinner = "none";
+                }
+                // if user beats the computer
+                else if ((userChoice === "paper" && computerChoice === "rock") || 
+                (userChoice === "rock" && computerChoice === "scissors") || 
+                (userChoice === "scissors" && computerChoice === "paper")) {
+                    // string that let's user know they beat the computer
+                    let userWon = userChoice + " beats " + computerChoice + "! You get one point."
+                    //capitalize first letter of string
+                    let userWonCapitalized = (userWon.slice(0,1)).toUpperCase() + userWon.slice(1);
+                    // logs string letting user know they beat the computer
+                    console.log(userWonCapitalized)
+                    // assigns round winner as user
+                    roundWinner = "user";
+                }
+                else {// if computer beats user
+                    // string lets user know computer beats them
+                    let computerWon = computerChoice + " beats " + userChoice + "! The computer gets one point."
+                    //capitalize first letter of string
+                    let computerWonCapitalized = (computerWon.slice(0,1)).toUpperCase() + computerWon.slice(1);
+                    // log string that lets user know computer beat them
+                    console.log(computerWonCapitalized)
+                    // assigns round winner as computer
+                    roundWinner = "computer";
+                }
+                return roundWinner;
+            }
+            
+            // creates place to record round winner in string format
+            let roundWinner;
+
+            function updateScore(roundWinner) {
+
+                // gives point to round winner
+                if (roundWinner === "user") {
+                    userScore++;
+                }
+                else if (roundWinner === "computer") {
+                    computerScore++;
+                }
+                // logs new score
+                console.log("Your score is " + userScore + "." + " The computer score's is " + computerScore + ".")
+         }
+
+        function playGame () {
+                for(let roundCounter = 1; roundCounter <= 5; roundCounter++) {
+                    console.log("Round " + roundCounter);
+                    // gets choice of rock, paper or scissors from computer
+                    computerChoice = getComputerChoice();
+                    // gets choice of rock, paper or scissors from user
+                    userChoice = getHumanChoice();
+                    // uses user choice and computer choice to determine who won and return that value as a string
+                    roundWinner = playRound(userChoice, computerChoice);
+                    // updates scores of user and computer after round's completion
+                    updateScore(roundWinner); 
+                }
+        }
+        playGame();
         </script>
     </body>
 </html>
