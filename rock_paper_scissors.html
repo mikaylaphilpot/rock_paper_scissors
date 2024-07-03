@@ -23,8 +23,20 @@
                 }
                 return computerChoice;
             }
+            function getHumanChoice() {
+                //prompts user for their choice of rock, paper, or scissors and stores choice
+                let humanChoice = prompt("Rock, paper or scissors? Please enter your choice.");
+                humanChoice = humanChoice.trim();
+                // ensures they do not enter something other than rock, paper or scissors
+                while((humanChoice !== "rock") && (humanChoice !== "paper") && (humanChoice !== "scissors")) {
+                    humanChoice = prompt("That is not a valid choice. Please enter rock, paper or scissors.")
+                }
+                return humanChoice;
+            }
             // stores computer's choice of rock, paper, or scissors outside of the function
             let computerChoice = getComputerChoice();
+            // stores user's choice of rock, paper or scissors outside of the function
+            let userChoice = getHumanChoice();
         </script>
     </body>
 </html>
