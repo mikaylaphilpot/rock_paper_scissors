@@ -42,11 +42,8 @@
             
 
             function getComputerChoice() {
-                // generates random number
                 let randomNumber = Math.random();
-                // stores computer's choice of rock, paper, or scissors inside of the function
                 let computerChoice;
-                // the size of the random number determines if the computer picks rock, paper or scissors
                 if (randomNumber < (1/3)) {
                     computerChoice = "rock";
                 }
@@ -59,60 +56,43 @@
                 return computerChoice;
             }
 
-            // creates place to store computer's choice of rock, paper, or scissors outside of the function
-            let computerChoice = getComputerChoice();
-            // creates place to store user's choice of rock, paper or scissors outside of the function
+            let computerChoice;
             let userChoice;
 
-            // creates place to store score for user
             let userScore = 0;
-            // creates place to store score for computer
             let computerScore = 0;
             
             displayUserScore.textContent = "Your Score - " + userScore;
             displayComputerScore.textContent = " Computer Score - " + computerScore;
 
             function playRound(userChoice, computerChoice) {
-                // logs user choice and computer choice so user is aware
                 displayChoices.textContent = ("You picked " + userChoice + " and the computer picked " + computerChoice + ".")
-                // establishes place to store user and computer scores for the round
+                
                 let userScoreRound;
                 let computerScoreRound;
                 let roundWinner;
 
                 if (userChoice === computerChoice) {
-                    // Let's user know they tied if they make the same choice as the computer
                     displayWinner.textContent = ("You tied! No one gets a point this round."); 
-                    // nobody won
                     roundWinner = "none";
                 }
-                // if user beats the computer
                 else if ((userChoice === "paper" && computerChoice === "rock") || 
                 (userChoice === "rock" && computerChoice === "scissors") || 
                 (userChoice === "scissors" && computerChoice === "paper")) {
-                    // string that let's user know they beat the computer
                     let userWon = userChoice + " beats " + computerChoice + "! You get one point."
-                    //capitalize first letter of string
                     let userWonCapitalized = (userWon.slice(0,1)).toUpperCase() + userWon.slice(1);
-                    // logs string letting user know they beat the computer
                     displayWinner.textContent = userWonCapitalized;
-                    // assigns round winner as user
                     roundWinner = "user";
                 }
-                else {// if computer beats user
-                    // string lets user know computer beats them
+                else {
                     let computerWon = computerChoice + " beats " + userChoice + "! The computer gets one point."
-                    //capitalize first letter of string
                     let computerWonCapitalized = (computerWon.slice(0,1)).toUpperCase() + computerWon.slice(1);
-                    // log string that lets user know computer beat them
                     displayWinner.textContent = computerWonCapitalized;
-                    // assigns round winner as computer
                     roundWinner = "computer";
                 }
                 return roundWinner;
             }
             
-            // creates place to record round winner in string format
             let roundWinner;
 
             function updateScore(roundWinner) {
@@ -124,10 +104,10 @@
                 else if (roundWinner === "computer") {
                     computerScore++;
                 }
-                // logs new score
+                // displays new score
                 displayUserScore.textContent = "Your Score - " + userScore;
                 displayComputerScore.textContent = " Computer Score - " + computerScore;
-         }
+             }
 
             function announceGameWinner(userScore, computerScore) {
                 if (userScore > computerScore) {
@@ -138,17 +118,14 @@
                 }
             }
             function playGame (userChoice) {
-                    // gets choice of rock, paper or scissors from computer
                     computerChoice = getComputerChoice();
-                    // uses user choice and computer choice to determine who won and return that value as a string
                     roundWinner = playRound(userChoice, computerChoice);
-                    // updates scores of user and computer after round's completion
                     updateScore(roundWinner);
                     if ((userScore === 5) || (computerScore === 5)) {
                         announceGameWinner(userScore, computerScore);
                     }
             }
-            
+
             rockButton.addEventListener('click', () => {
             if ((userScore < 5) && (computerScore < 5)) {
                 playGame('rock') }
