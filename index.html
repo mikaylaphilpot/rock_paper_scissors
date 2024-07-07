@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <title>Rock Paper Scissors</title>
     </head>
-    <body>
+    <body id = "body">
+        <div id="container"></div>
         <script>
             function getComputerChoice() {
                 // generates random number
@@ -24,22 +25,8 @@
                 return computerChoice;
             }
 
-            function getHumanChoice() {
-                // prompts user for their choice of rock, paper, or scissors and stores choice
-                let humanChoice = prompt("Rock, paper or scissors? Please enter your choice.");
-                // gets rid of whitespace in user answer
-                humanChoice = humanChoice.trim();
-                // makes user answer case insensitive
-                humanChoice = humanChoice.toLowerCase();
-                // ensures they do not enter something other than rock, paper or scissors
-                while((humanChoice !== "rock") && (humanChoice !== "paper") && (humanChoice !== "scissors")) {
-                    humanChoice = prompt("That is not a valid choice. Please enter rock, paper or scissors.")
-                }
-                return humanChoice;
-            }
-
             // creates place to store computer's choice of rock, paper, or scissors outside of the function
-            let computerChoice;
+            let computerChoice = getComputerChoice();
             // creates place to store user's choice of rock, paper or scissors outside of the function
             let userChoice;
 
@@ -104,20 +91,32 @@
                 console.log("Your score is " + userScore + "." + " The computer score's is " + computerScore + ".")
          }
 
-        function playGame () {
-                for(let roundCounter = 1; roundCounter <= 5; roundCounter++) {
-                    console.log("Round " + roundCounter);
-                    // gets choice of rock, paper or scissors from computer
-                    computerChoice = getComputerChoice();
-                    // gets choice of rock, paper or scissors from user
-                    userChoice = getHumanChoice();
-                    // uses user choice and computer choice to determine who won and return that value as a string
-                    roundWinner = playRound(userChoice, computerChoice);
-                    // updates scores of user and computer after round's completion
-                    updateScore(roundWinner); 
-                }
-        }
-        playGame();
+            function playGame (userChoice) {
+                // gets choice of rock, paper or scissors from computer
+                computerChoice = getComputerChoice();
+                // uses user choice and computer choice to determine who won and return that value as a string
+                roundWinner = playRound(userChoice, computerChoice);
+                // updates scores of user and computer after round's completion
+                updateScore(roundWinner); 
+            
+            }
+
+
+            const container = document.querySelector('#container');
+            const rockButton = document.createElement('button');
+            rockButton.textContent = 'rock';
+            container.appendChild(rockButton);
+            const paperButton = document.createElement('button');
+            paperButton.textContent = 'paper';
+            container.appendChild(paperButton);
+            const scissorsButton = document.createElement('button');
+            scissorsButton.textContent = 'scissors';
+            container.appendChild(scissorsButton);
+
+
+            rockButton.addEventListener('click', () => playGame('rock'));
+            paperButton.addEventListener('click', () => playGame('paper'));
+            scissorsButton.addEventListener('click', () => playGame('scissors'));
         </script>
     </body>
 </html>
